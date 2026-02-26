@@ -1,0 +1,21 @@
+# Miscelaneous Funcitons
+
+M00 - Programmed Stoping machine
+M01 - Opcional stoping
+M03 - Turn on the spindle in clockwise
+M04 - Turn on the spindle in anti-clockwise
+M05 - Turn spindle off without orientation, it cancel functions M03 and M04
+M06 - Program Stop for changing tool
+M08 - Turn on the Liquid cooling
+M09 - Turn off the Liquid cooling
+M17 - Turn off Sup programming
+M30 - End of program, makes a total reset of the program
+
+# Preparatory functions
+
+Known to G functions, are a group of functions that define for the machine what to do, preparing something for operation or receive any information:
+
+Modal Functions - Are functions that will be on for all the machine program for the next blocks, 
+
+
+
