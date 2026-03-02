@@ -1,68 +1,274 @@
-# Miscelaneous Functions
+YESSS brother 😤🔥
 
-M00 - Programmed Stoping machine
-M01 - Opcional stoping
-M03 - Turn on the spindle in clockwise
-M04 - Turn on the spindle in anti-clockwise
-M05 - Turn spindle off without orientation, it cancel functions M03 and M04
-M06 - Program Stop for changing tool
-M08 - Turn on the Liquid cooling
-M09 - Turn off the Liquid cooling
-M17 - Turn off Sup programming
-M30 - End of program, makes a total reset of the program
+Now we’re doing this clean and PROPER for GitHub.
 
-# Preparatory functions
+Below is the **exact structured README.md layout**, using correct Markdown hierarchy with `#`, `##`, `###` so everything is separated and organized.
 
-Known to G functions, are a group of functions that define for the machine what to do, preparing something for operation or receive any information:
+You can copy this directly into your repository.
 
-Modal Functions - Are functions that will be running for all the machine program for the next blocks, turned off only if modified by other function or by the same with different parameters.
-Non Modal Functions - Are functions that everytime you need to use, they are required to be programmed, so are valid only for the block thats been running
+---
 
-G17 - It select the working plane that envolves X and Y axis, G17 is used as default function since the machined is turned on
-G18 - It select the working plane that enmvolves X and Z axis
-G19 - It select the working plane that envolvez Y and Z axis
+# CNC Programming Fundamentals
 
-G70 - Is Modal and programed to be used "inches" metric
-G71 - Is Modal and programmed to be used "Millimeters" metric
-G90 - Is Modal and programmed to use absolute cordinates 
-G91 - Is Modal and programmed to use incremental cordinates
+## ISO Standard G-Code & M-Code Structured Reference
 
-G64 - Is used for to make the machine read the movements in a continuous form, without stoping the axis between the blocks / Modal
-G94 - Makes you able to control the cutting but time units for rotational movements
+---
 
-G54 to G57 - Are system working coordinates, what we mean by that is we can create that many "zeroed" points to work with the required part 
+# 1. Introduction
 
-G60 - Is used to make exact positions/movements, so it makes "Vivid" sides, normally it makes a little fillet, and this turns that off //  Turned off by using the G64 Function
+This repository contains structured notes about CNC programming fundamentals using ISO-standard G-code and M-code syntax.
 
-G53 - Cancel the Modal and Non-Modal Coordinates from the system / Non-Modal
+The purpose of this document is to:
 
-# CFTCP, CFIN AND CFC Functions
+* Provide a clean technical reference
+* Organize core CNC commands
+* Serve as a personal engineering documentation base
+* Build a structured knowledge library for machining fundamentals
 
-This fucntions are used to cut radius
+---
 
-CFTCP - Convex Radius
-CFIN - Concave Radius
-CFC - Default
+# 2. CNC Program Structure
 
-# Auxiliary Functions
+A CNC program is composed of blocks (lines), commands, and coordinates.
 
-N Functions - Number of blocks or sentences, this function is not obrigatory
+Each block defines a machine action and typically contains:
 
-T Functions - Are meant to select determinate cutting too, they just call the tool, it doesnt change the cutting tool so it needs to call M6 on next block ( new line )
+* Block number (optional)
+* Preparatory functions (G codes)
+* Miscellaneous functions (M codes)
+* Coordinates (X, Y, Z)
+* Feed rate (F)
+* Tool commands (T, D)
 
-D Functions - Are meant to call the saved diameter and compriment of the cutting tool selected and saved from 1 to 9 
+### Example Program Structure
 
-F Functions - Meant to adjust cutting velocity for the cutting tool / Modal function
+```
+N10 G90 G71 G17
+N20 G54
+N30 T01 M06
+N40 G00 X0 Y0 Z50
+N50 G01 Z-5 F200
+N60 M30
+```
 
-/ Functions - Meant to ignore the blocks that you want
+---
 
-; - Meant to add comments into the blocks
+# 3. Miscellaneous Functions (M Codes)
 
-# - EOB meant thats the end of block, meaning that every line/block needs to finish with this caracther
+Miscellaneous functions control machine behavior such as spindle movement, coolant activation, and program flow.
 
-#Linear Interpol
+## 3.1 Program Control
 
-G00 + X Y Z function - is meant to make a position of the tool without making any of the cuts / Modal
+| Code | Description                                               |
+| ---- | --------------------------------------------------------- |
+| M00  | Programmed stop. Machine pauses until manually resumed.   |
+| M01  | Optional stop. Executes only if optional stop is enabled. |
+| M17  | End of subprogram.                                        |
+| M30  | End of program and full reset.                            |
 
-G01 + X Y Z + F Function - Make rectlinear movements with any angle by the result of the coordinates writen with the Cutting speed (F)
+---
 
+## 3.2 Spindle Control
+
+| Code | Description                             |
+| ---- | --------------------------------------- |
+| M03  | Spindle ON – clockwise rotation.        |
+| M04  | Spindle ON – counterclockwise rotation. |
+| M05  | Spindle OFF. Cancels M03 and M04.       |
+
+---
+
+## 3.3 Tool and Coolant Control
+
+| Code | Description                          |
+| ---- | ------------------------------------ |
+| M06  | Tool change (must follow T command). |
+| M08  | Coolant ON.                          |
+| M09  | Coolant OFF.                         |
+
+---
+
+# 4. Preparatory Functions (G Codes)
+
+Preparatory functions define how the machine interprets motion, coordinates, and machining logic.
+
+---
+
+# 4.1 Modal vs Non-Modal Functions
+
+## Modal Functions
+
+Modal functions remain active until replaced by another function in the same group.
+
+Example:
+If G90 (absolute mode) is programmed, it remains active until G91 is called.
+
+## Non-Modal Functions
+
+Non-modal functions are valid only in the block where they are written.
+
+Example:
+G53 applies only to the specific movement block.
+
+Understanding this distinction prevents unexpected machine behavior.
+
+---
+
+# 4.2 Plane Selection
+
+Plane selection defines which axes are active for circular interpolation and cutter compensation.
+
+| Code | Plane                         |
+| ---- | ----------------------------- |
+| G17  | XY Plane (default at startup) |
+| G18  | XZ Plane                      |
+| G19  | YZ Plane                      |
+
+---
+
+# 4.3 Unit System Selection
+
+| Code | Description               |
+| ---- | ------------------------- |
+| G70  | Inch units (Modal).       |
+| G71  | Millimeter units (Modal). |
+
+---
+
+# 4.4 Coordinate Programming Modes
+
+## G90 – Absolute Programming
+
+Coordinates are referenced from the active work zero (G54–G57).
+
+## G91 – Incremental Programming
+
+Coordinates are referenced from the current tool position.
+
+---
+
+# 4.5 Motion Behavior Modes
+
+| Code | Description                                               |
+| ---- | --------------------------------------------------------- |
+| G64  | Continuous mode. Machine blends movements between blocks. |
+| G60  | Exact stop mode. Machine stops at the end of each block.  |
+| G94  | Feed rate defined in units per minute.                    |
+
+Note:
+G60 is cancelled when G64 is activated.
+
+---
+
+# 4.6 Work Coordinate Systems
+
+| Code Range | Description                                           |
+| ---------- | ----------------------------------------------------- |
+| G54 – G57  | Programmable work offsets (multiple zero references). |
+
+These allow machining multiple setups without rewriting the program.
+
+---
+
+# 4.7 Machine Coordinate System
+
+| Code | Description                                        |
+| ---- | -------------------------------------------------- |
+| G53  | Movement in machine coordinate system (Non-Modal). |
+
+Used to bypass work offsets and move relative to the machine’s fixed origin.
+
+---
+
+# 5. Radius Cutting Functions
+
+These functions define contour radius behavior.
+
+| Code  | Description             |
+| ----- | ----------------------- |
+| CFTCP | Convex radius cutting.  |
+| CFIN  | Concave radius cutting. |
+| CFC   | Default contour mode.   |
+
+---
+
+# 6. Auxiliary Programming Elements
+
+---
+
+# 6.1 Block Numbering
+
+| Code | Description                         |
+| ---- | ----------------------------------- |
+| N    | Block number identifier (optional). |
+
+Used for organization and debugging.
+
+---
+
+# 6.2 Tool Selection and Offsets
+
+| Code | Description                          |
+| ---- | ------------------------------------ |
+| T    | Tool selection command.              |
+| M06  | Executes tool change.                |
+| D    | Tool diameter or length offset call. |
+
+Important:
+
+* T selects the tool.
+* M06 performs the tool change.
+* D applies stored tool geometry compensation.
+
+---
+
+# 6.3 Feed and Block Control
+
+| Code | Description                          |
+| ---- | ------------------------------------ |
+| F    | Feed rate command (Modal).           |
+| /    | Block skip.                          |
+| ;    | Comment indicator.                   |
+| #    | End Of Block (controller dependent). |
+
+---
+
+# 7. Linear Interpolation and Positioning
+
+---
+
+# 7.1 Rapid Positioning – G00
+
+```
+G00 X__ Y__ Z__
+```
+
+* Rapid traverse movement
+* No cutting operation
+* Used for positioning
+* Modal command
+
+---
+
+# 7.2 Linear Cutting Movement – G01
+
+```
+G01 X__ Y__ Z__ F__
+```
+
+* Linear interpolation
+* Controlled feed rate
+* Used during material removal
+* Modal command
+
+---
+
+# 8. Engineering Notes
+
+* Modal commands reduce redundancy in programs.
+* Proper use of work offsets improves setup efficiency.
+* Exact stop mode improves sharp geometry but increases cycle time.
+* Continuous mode improves surface finish and machining speed.
+* Clean block structure improves readability and safety.
+
+---
