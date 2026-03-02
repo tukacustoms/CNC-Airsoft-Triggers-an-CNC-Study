@@ -1,4 +1,4 @@
-# Miscelaneous Funcitons
+# Miscelaneous Functions
 
 M00 - Programmed Stoping machine
 M01 - Opcional stoping
@@ -15,7 +15,54 @@ M30 - End of program, makes a total reset of the program
 
 Known to G functions, are a group of functions that define for the machine what to do, preparing something for operation or receive any information:
 
-Modal Functions - Are functions that will be on for all the machine program for the next blocks, 
+Modal Functions - Are functions that will be running for all the machine program for the next blocks, turned off only if modified by other function or by the same with different parameters.
+Non Modal Functions - Are functions that everytime you need to use, they are required to be programmed, so are valid only for the block thats been running
 
+G17 - It select the working plane that envolves X and Y axis, G17 is used as default function since the machined is turned on
+G18 - It select the working plane that enmvolves X and Z axis
+G19 - It select the working plane that envolvez Y and Z axis
 
+G70 - Is Modal and programed to be used "inches" metric
+G71 - Is Modal and programmed to be used "Millimeters" metric
+G90 - Is Modal and programmed to use absolute cordinates 
+G91 - Is Modal and programmed to use incremental cordinates
+
+G64 - Is used for to make the machine read the movements in a continuous form, without stoping the axis between the blocks / Modal
+G94 - Makes you able to control the cutting but time units for rotational movements
+
+G54 to G57 - Are system working coordinates, what we mean by that is we can create that many "zeroed" points to work with the required part 
+
+G60 - Is used to make exact positions/movements, so it makes "Vivid" sides, normally it makes a little fillet, and this turns that off //  Turned off by using the G64 Function
+
+G53 - Cancel the Modal and Non-Modal Coordinates from the system / Non-Modal
+
+# CFTCP, CFIN AND CFC Functions
+
+This fucntions are used to cut radius
+
+CFTCP - Convex Radius
+CFIN - Concave Radius
+CFC - Default
+
+# Auxiliary Functions
+
+N Functions - Number of blocks or sentences, this function is not obrigatory
+
+T Functions - Are meant to select determinate cutting too, they just call the tool, it doesnt change the cutting tool so it needs to call M6 on next block ( new line )
+
+D Functions - Are meant to call the saved diameter and compriment of the cutting tool selected and saved from 1 to 9 
+
+F Functions - Meant to adjust cutting velocity for the cutting tool / Modal function
+
+/ Functions - Meant to ignore the blocks that you want
+
+; - Meant to add comments into the blocks
+
+# - EOB meant thats the end of block, meaning that every line/block needs to finish with this caracther
+
+#Linear Interpol
+
+G00 + X Y Z function - is meant to make a position of the tool without making any of the cuts / Modal
+
+G01 + X Y Z + F Function - Make rectlinear movements with any angle by the result of the coordinates writen with the Cutting speed (F)
 
