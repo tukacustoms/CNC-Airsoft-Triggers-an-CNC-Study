@@ -1,0 +1,33 @@
+// Aluiminum block used 10 mm × 20 mm × 60 mm
+// X 6.275mm, Y 3mm, Z 3mm
+
+// Tool size 3mm diameter for details, 4mm general milling, 6mm for rought
+// leave 0.3 radial and 0.2 axial mm
+// leave 0.2mm of face finishing
+
+// F720 – F1000 rought and F500 – F700 for finishing 3mm
+// F1100 – F1600 rought  and F800 – F1100 for finishing 4mm
+// F1500 – F2200 rought and F1100 – F1500 for finishing 6mm
+
+// RPM = 12000
+
+1 pockets
+2 holes
+3 chamfers
+4 outside contour LAST
+
+// program without tool compensation
+
+// G64 be used on trigger format
+
+G17 G71 G90 G94 
+G53 G0 Z-100 X-30 Y-10 D0 M5
+T02 ; using 4mm cutting tool
+M6
+G54 D1 ; D1 IS THE TOOL CORRECTION
+F1300 M3 ; for the 4mm endmill, and uses 2 or 3 flutes
+G0 X62.2 Y7.2 Z-6.7 M8
+G1 X55.2 
+G1 Y5.2
+
+
