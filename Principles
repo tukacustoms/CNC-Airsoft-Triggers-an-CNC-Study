@@ -1,0 +1,196 @@
+# The Workflow
+
+1. Design for Manufacturing (DFM)
+2. Setup Strategy
+3. Tool Library
+4. Roughing Strategy
+5. Rest Machining
+6. Finishing Strategy
+7. Chamfer / Deburring
+8. Simulation & Collision Check
+9. Post Processing
+
+1- DFM
+  Before even start 3D modeling the first thing is to think the part as CNC limitations and how they work, that's why we call Industrial design or Design for Manufacturing (DFM), you need to take in consideration that the machine will make cuts and have toolpaths that can limit complex geometry or make parts way more expensive.
+
+Tool Accessibility
+
+Ask yourself:
+
+Can the tool reach the feature?
+
+Is there clearance for the holder?
+
+Can this be machined in one setup?
+
+2- Setup Strategy 
+  This is how you gonna process the orientations and hwo you gonna machine the overal part. Normally as Z = Vertical
+
+Work Coordinate System (WCS)
+
+This is your G54 origin.
+
+Common choices are Top corner or center of the part, so it;s way easier to probe.
+
+Stock Definition
+
+Important for simulation.
+
+Example:
+
+Mode: Relative size box
+Side offset: 1 mm
+Top offset: 1 mm
+
+This defines raw material.
+
+3- Tool Library
+  
+  Choose the correct cutting tools you gonna use, write down the correct specifications or check correct tested spindle speeds to use
+
+Example Speeds for 7075 Aluminum
+Tool	RPM	Feed
+6mm	18000	1500-2500 mm/min
+4mm	18000	1200-2000 mm/min
+3mm	18000	800-1500 mm/min
+
+4- Roughing Strategy
+
+  This is the most important toolpath, on Fusion 360 CAM the best to choose is 3D Adaptive Clearing
+Why it's superior:
+
+-constant tool load
+-higher speeds
+-longer tool life
+-smoother cuts
+
+Example Roughing Parameters
+
+For a 6mm endmill in aluminum:
+
+Optimal Load: 0.8 mm
+Max stepdown: 3 mm
+Feedrate: 1800 mm/min
+RPM: 18000
+
+5- Rest Machining
+After roughing with a big tool:
+
+6mm tool
+There will be corners the tool can't reach.
+Then use:
+
+2D Pocket
+or
+3D Adaptive (Rest machining)
+
+with a 4mm tool.
+
+Fusion will automatically detect remaining material.
+
+6- Finishing Strategy
+Roughing leaves about:
+
+0.2 mm stock
+
+Then finishing removes it.
+
+Example finishing operations:
+
+-2D Contour
+For outer walls.
+
+-Pocket finishing
+For pockets.
+
+Example finishing feed:
+
+4mm tool
+Feed: 800–1200 mm/min
+Stock to leave: 0
+
+7- Chamfer / Deburring
+
+Use:
+
+2D Chamfer
+
+with:
+
+90° chamfer mill
+
+Example chamfer:
+
+0.2 mm
+or
+0.5 mm
+
+This removes sharp edges.
+
+8-Simulation (EXTREMELY IMPORTANT)
+
+Never post code before simulating.
+
+Fusion Simulation checks:
+
+✔ tool collision
+✔ holder collision
+✔ stock removal
+✔ machining time
+
+Enable:
+
+Stock simulation
+
+This shows real machining.
+
+---
+The Most Important Concept in CNC Programming
+Tool Engagement
+
+Beginners think:
+
+Deeper cut = faster
+
+But professionals know:
+
+Constant tool engagement = faster
+
+That's why adaptive clearing exists.
+
+Another Pro Tip
+
+Use multiple stepdowns instead of one deep cut.
+
+Example:
+
+Bad:
+
+6mm deep cut in one pass
+
+Better:
+
+3mm
+3mm
+
+Safer and better surface finish.
+
+---
+
+The Skill That Makes a Great CNC Programmer
+
+It's not CAM software.
+
+It's understanding cutting physics.
+
+You need to learn:
+
+chip load
+
+tool engagement
+
+radial vs axial cuts
+
+tool deflection
+
+material removal rate (MRR)
